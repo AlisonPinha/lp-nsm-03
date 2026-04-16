@@ -8,6 +8,8 @@ const API_BASE = import.meta.env.PROD
 
 const PARTIAL_ENDPOINT = `${API_BASE}/api/quiz/partial`;
 
+const QUIZ_SECRET = import.meta.env.VITE_QUIZ_SECRET || "";
+
 const SOURCE = "lp-03";
 
 // Steps that trigger a partial send (when LEAVING this step)
@@ -83,7 +85,7 @@ export function useQuizPartial() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-quiz-secret": "764e4e2e22024faf00ce787ade2a9729",
+        "x-quiz-secret": QUIZ_SECRET,
       },
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(10000),

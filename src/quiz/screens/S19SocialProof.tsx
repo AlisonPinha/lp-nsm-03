@@ -9,10 +9,12 @@ export function S19SocialProof() {
   const { state, goToStep } = useQuiz();
   const { answers } = state;
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const handleContinue = async () => {
     if (isSubmitting) return;
     setIsSubmitting(true);
+    setSubmitError(false);
     try {
       await submitToClickUp(answers);
       trackConversion('quiz_complete', {
@@ -25,11 +27,12 @@ export function S19SocialProof() {
         revenue: answers.revenue,
         ad_spend: answers.adSpend,
       });
+      goToStep(getNextStep("social-proof", answers));
     } catch (err) {
       console.error("Failed to submit to ClickUp:", err);
+      setSubmitError(true);
     } finally {
       setIsSubmitting(false);
-      goToStep(getNextStep("social-proof", answers));
     }
   };
 
@@ -54,6 +57,13 @@ export function S19SocialProof() {
           />
         </div>
 
+        {submitError && (
+          <div className="w-full max-w-md mb-6 rounded-xl bg-red-500/10 border border-red-500/30 px-5 py-4 text-center">
+            <p className="text-red-400 text-sm font-medium mb-1">Ops, algo deu errado ao enviar seus dados.</p>
+            <p className="text-white/60 text-xs">Toque no botão abaixo para tentar novamente.</p>
+          </div>
+        )}
+
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           <button
@@ -62,7 +72,7 @@ export function S19SocialProof() {
             onClick={handleContinue}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Processando..." : "Quero uma parceria assim!"}
+            {isSubmitting ? "Processando..." : submitError ? "Tentar novamente" : "Quero uma parceria assim!"}
           </button>
           <button
             type="button"

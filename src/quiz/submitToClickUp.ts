@@ -6,6 +6,10 @@ const API_BASE = import.meta.env.PROD
   ? "https://api.nutraseumarketing.com.br"
   : "http://localhost:3000";
 
+const QUIZ_SECRET = import.meta.env.VITE_QUIZ_SECRET || "";
+
+const MAX_RETRIES = 2;
+
 export async function submitToClickUp(answers: QuizAnswers): Promise<void> {
   const payload = {
     source: "lp-03",
@@ -36,26 +40,40 @@ export async function submitToClickUp(answers: QuizAnswers): Promise<void> {
     },
   };
 
-  const response = await fetch(`${API_BASE}/api/webhook/quiz-lp`, {
+  const fetchOptions: RequestInit = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-quiz-secret": "764e4e2e22024faf00ce787ade2a9729",
+      "x-quiz-secret": QUIZ_SECRET,
     },
     body: JSON.stringify(payload),
     signal: AbortSignal.timeout(15000),
-  });
+  };
 
-  if (!response.ok) {
-    const data = await response.json().catch(() => ({}));
-    throw new Error(data.error || `HTTP ${response.status}`);
+  let lastError: Error | null = null;
+
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await fetch(`${API_BASE}/api/webhook/quiz-lp`, fetchOptions);
+      if (response.ok) {
+        trackPixel('Lead', {
+          content_name: answers.area,
+          content_category: 'quiz_complete',
+        });
+        return;
+      }
+      const data = await response.json().catch(() => ({}));
+      lastError = new Error(data.error || `HTTP ${response.status}`);
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+    }
+
+    if (attempt < MAX_RETRIES) {
+      await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+    }
   }
 
-  // Fire Meta Pixel Lead event
-  trackPixel('Lead', {
-    content_name: answers.area,
-    content_category: 'quiz_complete',
-  });
+  throw lastError ?? new Error("Falha ao enviar dados");
 }
 
 function getStoredUTMs(): Record<string, string> {
