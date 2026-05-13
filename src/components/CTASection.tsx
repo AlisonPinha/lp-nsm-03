@@ -1,10 +1,12 @@
 import { ArrowUpRight } from "lucide-react";
 import { useQuizModal } from "@/hooks/useQuizModal";
+import { useTrackSectionView } from "@/hooks/useTrackSectionView";
 
 const CTASection = () => {
   const { open } = useQuizModal();
+  const sectionRef = useTrackSectionView<HTMLElement>("lp-03-cta");
   return (
-    <section className="section-cream py-24 md:py-32" id="contato">
+    <section ref={sectionRef} className="section-cream py-24 md:py-32" id="contato">
       <div className="container mx-auto px-6">
         {/* Dark card inside cream section */}
         <div className="max-w-3xl mx-auto bg-nsm-dark-1 rounded-3xl text-center p-10 md:p-14 relative overflow-hidden">

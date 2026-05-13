@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import draKellyImg from "@/assets/dra-kelly.png";
 import drHumbertoImg from "@/assets/dr-humberto.png";
 import drRaiImg from "@/assets/dr-rai.png";
+import { useTrackSectionView } from "@/hooks/useTrackSectionView";
 
 declare global {
   interface Window {
@@ -63,6 +64,7 @@ const featuredCases = [
 ];
 
 const CasesSection = () => {
+  const sectionRef = useTrackSectionView<HTMLElement>("lp-03-cases");
   const [apiReady, setApiReady] = useState(false);
   const [activeVideos, setActiveVideos] = useState<Set<string>>(new Set());
   const playersRef = useRef<Map<string, YTPlayer>>(new Map());
@@ -124,7 +126,7 @@ const CasesSection = () => {
   };
 
   return (
-    <section className="section-dark py-24 md:py-32" id="cases">
+    <section ref={sectionRef} className="section-dark py-24 md:py-32" id="cases">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="section-label">(03) Resultados</p>

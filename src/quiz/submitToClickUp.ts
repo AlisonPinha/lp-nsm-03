@@ -1,6 +1,6 @@
 import type { QuizAnswers } from "./quizTypes";
 import { getVisitorId } from "@/lib/tracking";
-import { trackPixel } from "@/lib/meta-pixel";
+import { trackPixel, setAdvancedMatching } from "@/lib/meta-pixel";
 
 const API_BASE = import.meta.env.PROD
   ? "https://api.nutraseumarketing.com.br"
@@ -64,6 +64,15 @@ export async function submitToClickUp(answers: QuizAnswers): Promise<void> {
     try {
       const response = await fetch(`${API_BASE}/api/webhook/quiz-lp`, fetchOptions);
       if (response.ok) {
+        // Advanced Matching ANTES do Lead pra subir Match Quality.
+        // setAdvancedMatching faz fbq('init', ..., {em, ph, fn, ln}) hasheados.
+        const [firstName, ...rest] = answers.name.trim().split(/\s+/);
+        await setAdvancedMatching({
+          email: answers.email,
+          phone: answers.phone,
+          firstName,
+          lastName: rest.join(" ") || undefined,
+        });
         trackPixel('Lead', {
           content_name: answers.area,
           content_category: 'quiz_complete',

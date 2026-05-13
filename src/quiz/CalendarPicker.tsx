@@ -116,6 +116,12 @@ export default function CalendarPicker() {
       value: 0,
     });
     trackPixel('Schedule', { date: dateStr, time: selectedTime });
+    trackPixel('Contact', {
+      content_name: 'whatsapp-agendamento',
+      content_category: 'lp-03',
+      date: dateStr,
+      time: selectedTime,
+    });
     const message = `Olá! Gostaria de confirmar minha sessão estratégica para ${dateStr} às ${selectedTime}. Vim pelo quiz de qualificação da NSM.`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");

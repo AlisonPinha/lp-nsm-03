@@ -1,3 +1,5 @@
+import { useTrackSectionView } from "@/hooks/useTrackSectionView";
+
 const dores = [
   {
     title: 'A Guerra do "Quanto Custa?"',
@@ -18,8 +20,9 @@ const dores = [
 ];
 
 const DoresSection = () => {
+  const sectionRef = useTrackSectionView<HTMLElement>("lp-03-dores");
   return (
-    <section className="section-dark py-24 md:py-32" id="dores">
+    <section ref={sectionRef} className="section-dark py-24 md:py-32" id="dores">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <p className="section-label">(02) Identificação</p>
