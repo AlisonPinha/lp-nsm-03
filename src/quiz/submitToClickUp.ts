@@ -11,6 +11,13 @@ const QUIZ_SECRET = import.meta.env.VITE_QUIZ_SECRET || "";
 const MAX_RETRIES = 2;
 
 export async function submitToClickUp(answers: QuizAnswers): Promise<void> {
+  // Deduplicação Pixel ↔ CAPI: gerar eventId único, enviar no payload
+  // (backend usa em sendMetaCAPIEvent) e no fbq('track', 'Lead', ..., {eventID})
+  // pra Meta correlacionar os 2 eventos como um só.
+  const leadEventId = `lead_${Date.now()}_${
+    crypto.randomUUID?.().slice(0, 8) ?? Math.random().toString(36).slice(2, 10)
+  }`;
+
   const payload = {
     source: "lp-03",
     answers: {
@@ -38,6 +45,7 @@ export async function submitToClickUp(answers: QuizAnswers): Promise<void> {
       landingUrl: window.location.href,
       stepsCompleted: 16,
     },
+    eventIds: { lead: leadEventId },
   };
 
   const fetchOptions: RequestInit = {
@@ -59,7 +67,7 @@ export async function submitToClickUp(answers: QuizAnswers): Promise<void> {
         trackPixel('Lead', {
           content_name: answers.area,
           content_category: 'quiz_complete',
-        });
+        }, leadEventId);
         return;
       }
       const data = await response.json().catch(() => ({}));
