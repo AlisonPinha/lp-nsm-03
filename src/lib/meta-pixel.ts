@@ -75,32 +75,95 @@ export interface AdvancedMatchingUser {
   phone?: string;
   firstName?: string;
   lastName?: string;
+  externalId?: string;
 }
 
-export async function setAdvancedMatching(user: AdvancedMatchingUser): Promise<void> {
-  if (typeof window.fbq !== "function") return;
-  if (typeof crypto?.subtle?.digest !== "function") return;
+export type AdvancedMatchingHashes = Partial<Record<"em" | "ph" | "fn" | "ln", string>>;
 
+const STORAGE_KEY = "nsm_am";
+const HEX_64 = /^[a-f0-9]{64}$/i;
+
+/**
+ * Lê os hashes de AM persistidos no localStorage (set pelo último submit).
+ * Permite usuários retornantes terem AM no PageView seguinte.
+ */
+export function getStoredAdvancedMatching(): AdvancedMatchingHashes {
   try {
-    const params: Record<string, string> = {};
-    if (user.email) params.em = await sha256(normEmail(user.email));
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    const out: AdvancedMatchingHashes = {};
+    for (const key of ["em", "ph", "fn", "ln"] as const) {
+      const v = parsed?.[key];
+      if (typeof v === "string" && HEX_64.test(v)) out[key] = v.toLowerCase();
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
+function persistAdvancedMatching(hashes: AdvancedMatchingHashes): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(hashes));
+  } catch {
+    /* localStorage indisponível */
+  }
+}
+
+export async function setAdvancedMatching(user: AdvancedMatchingUser): Promise<AdvancedMatchingHashes> {
+  if (typeof window.fbq !== "function") return {};
+  if (typeof crypto?.subtle?.digest !== "function") return {};
+
+  const hashes: AdvancedMatchingHashes = {};
+  try {
+    if (user.email) hashes.em = await sha256(normEmail(user.email));
     if (user.phone) {
       const ph = normPhone(user.phone);
-      if (ph) params.ph = await sha256(ph);
+      if (ph) hashes.ph = await sha256(ph);
     }
     if (user.firstName) {
       const fn = normName(user.firstName);
-      if (fn) params.fn = await sha256(fn);
+      if (fn) hashes.fn = await sha256(fn);
     }
     if (user.lastName) {
       const ln = normName(user.lastName);
-      if (ln) params.ln = await sha256(ln);
+      if (ln) hashes.ln = await sha256(ln);
     }
-    if (Object.keys(params).length === 0) return;
-
-    // Re-init injeta user_data nos próximos eventos (não dispara PageView novo)
-    window.fbq("init", PIXEL_ID, params);
   } catch {
-    // Hash falhou — segue sem advanced matching. Lead Pixel ainda dispara.
+    return {};
   }
+
+  if (Object.keys(hashes).length === 0 && !user.externalId) return {};
+
+  // Re-init injeta user_data nos próximos eventos (não dispara PageView novo)
+  const initParams: Record<string, string> = { ...hashes };
+  if (user.externalId) initParams.external_id = user.externalId;
+  window.fbq("init", PIXEL_ID, initParams);
+
+  // Persiste só hashes PII pro próximo PageView de retornantes
+  if (Object.keys(hashes).length > 0) persistAdvancedMatching(hashes);
+
+  return hashes;
+}
+
+/**
+ * Dispara PageView com dedup CAPI. Aplica AM persistido (de retornante) +
+ * external_id (vid do tracking SDK) antes do fbq track.
+ */
+export function firePageView(eventId: string, externalId?: string): AdvancedMatchingHashes {
+  if (typeof window.fbq !== "function") return {};
+
+  const stored = getStoredAdvancedMatching();
+  const initParams: Record<string, string> = { ...stored };
+  if (externalId) initParams.external_id = externalId;
+
+  if (Object.keys(initParams).length > 0) {
+    window.fbq("init", PIXEL_ID, initParams);
+  }
+
+  const opts = eventId ? { eventID: eventId } : undefined;
+  window.fbq("track", "PageView", undefined, opts);
+
+  return stored;
 }

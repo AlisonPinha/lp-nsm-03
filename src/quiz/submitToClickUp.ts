@@ -1,5 +1,5 @@
 import type { QuizAnswers } from "./quizTypes";
-import { getVisitorId } from "@/lib/tracking";
+import { getVisitorId, getMetaTrackingContext } from "@/lib/tracking";
 import { trackPixel, setAdvancedMatching } from "@/lib/meta-pixel";
 
 const API_BASE = import.meta.env.PROD
@@ -39,6 +39,7 @@ export async function submitToClickUp(answers: QuizAnswers): Promise<void> {
     utm: getStoredUTMs(),
     sessionId: crypto.randomUUID?.() ?? fallbackUUID(),
     visitor_id: getVisitorId() ?? undefined,
+    metaContext: getMetaTrackingContext(),
     metadata: {
       userAgent: navigator.userAgent,
       referrer: document.referrer || undefined,
@@ -72,6 +73,7 @@ export async function submitToClickUp(answers: QuizAnswers): Promise<void> {
           phone: answers.phone,
           firstName,
           lastName: rest.join(" ") || undefined,
+          externalId: getVisitorId() ?? undefined,
         });
         trackPixel('Lead', {
           content_name: answers.area,

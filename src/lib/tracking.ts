@@ -6,6 +6,8 @@
 
 // ── Config ──────────────────────────────────────────────────────
 
+import { firePageView } from './meta-pixel';
+
 const TRACKING_URL = 'https://tracking-api.nsmvps.com.br';
 const SITE_ID = '3a0600ce-791b-4de2-a6b5-52305af272ef';
 const API_KEY = 'trk_cb7c80ea29976009779aeedd37aa9cd77ccc65aa1b4a9d9bd05a5e6b6a2decdc';
@@ -13,6 +15,10 @@ const COOKIE_NAME = '_trk';
 const COOKIE_MAX_AGE_DAYS = 400;
 const LP_NAME = 'lp-03';
 const DEBUG = false;
+
+const CAPI_URL = import.meta.env.PROD
+  ? 'https://api.nutraseumarketing.com.br/api/webhook/tracking-pageview'
+  : 'http://localhost:3000/api/webhook/tracking-pageview';
 
 // ── Types ───────────────────────────────────────────────────────
 
@@ -268,8 +274,44 @@ export function initTracking(): void {
   }
 
   sendEvent('page_view', _data);
+
+  // Meta Pixel PageView (browser) + espelha no CAPI server-side com mesmo event_id.
+  // Dedup automático no Events Manager.
+  const pvEventId = `pv_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  const am = firePageView(pvEventId, _data.vid);
+  void sendPageViewToCAPI(pvEventId, _data, am);
+
   _cleanupScroll = observeScrollDepth(_data);
   _cleanupTime = observeTimeOnPage(_data);
+}
+
+async function sendPageViewToCAPI(
+  eventId: string,
+  data: TrackingData,
+  am: Record<string, string>,
+): Promise<void> {
+  const body = JSON.stringify({
+    event_id: eventId,
+    source: LP_NAME,
+    url: window.location.href,
+    user_agent: navigator.userAgent,
+    fbp: data.fbp,
+    fbc: data.fbc,
+    external_id: data.vid,
+    am,
+  });
+
+  try {
+    await fetch(CAPI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      keepalive: true,
+    });
+    if (DEBUG) console.log('[trk] PageView CAPI sent', { eventId });
+  } catch {
+    // fail-silent — Pixel browser já disparou, perda só do espelho server-side
+  }
 }
 
 export function trackConversion(event: string, properties?: Record<string, unknown>): void {
@@ -279,6 +321,15 @@ export function trackConversion(event: string, properties?: Record<string, unkno
 
 export function getVisitorId(): string | null {
   return _data?.vid ?? null;
+}
+
+export function getMetaTrackingContext(): {
+  visitor_id?: string;
+  fbp?: string;
+  fbc?: string;
+} {
+  if (!_data) return {};
+  return { visitor_id: _data.vid, fbp: _data.fbp, fbc: _data.fbc };
 }
 
 export function destroyTracking(): void {
