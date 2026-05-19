@@ -16,7 +16,11 @@ export function PopupProvider({ children }: { children: ReactNode }) {
 
   const open = () => {
     trackConversion("lead", { action: "popup_opened" });
-    trackPixel("PopupOpened", { source: "lp-03" });
+    trackPixel("ViewContent", {
+      content_name: "popup_open",
+      content_category: "lead_form",
+      source: "lp-03",
+    });
     setIsOpen(true);
   };
   const close = () => setIsOpen(false);
