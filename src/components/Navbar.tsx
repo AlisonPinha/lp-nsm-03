@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { useQuizModal } from "@/hooks/useQuizModal";
+import { usePopup } from "@/hooks/usePopup";
 
 const navLinks = [
   { label: "Dores", href: "#dores" },
@@ -11,7 +11,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const { open } = useQuizModal();
+  const { open } = usePopup();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 

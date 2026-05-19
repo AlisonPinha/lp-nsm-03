@@ -1,8 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
-import { useQuizModal } from "@/hooks/useQuizModal";
+import { usePopup } from "@/hooks/usePopup";
 
 const HeroSection = () => {
-  const { open } = useQuizModal();
+  const { open } = usePopup();
   return (
     <section className="section-dark min-h-screen flex flex-col justify-center pt-20 pb-16 relative">
       {/* Radial glow behind title */}

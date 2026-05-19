@@ -12,12 +12,12 @@ import AboutSection from "@/components/AboutSection";
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
-import { QuizModalProvider } from "@/hooks/useQuizModal";
-import { QuizModal } from "@/quiz/QuizModal";
+import { PopupProvider } from "@/hooks/usePopup";
+import { Popup } from "@/popup/Popup";
 
 const Index = () => {
   return (
-    <QuizModalProvider>
+    <PopupProvider>
       <main className="min-h-screen bg-nsm-dark-1">
         <Navbar />
         <HeroSection />
@@ -34,8 +34,8 @@ const Index = () => {
         <CTASection />
         <Footer />
       </main>
-      <QuizModal />
-    </QuizModalProvider>
+      <Popup />
+    </PopupProvider>
   );
 };
 

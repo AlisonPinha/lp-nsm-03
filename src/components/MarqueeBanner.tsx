@@ -1,8 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
-import { useQuizModal } from "@/hooks/useQuizModal";
+import { usePopup } from "@/hooks/usePopup";
 
 const MarqueeBanner = () => {
-  const { open } = useQuizModal();
+  const { open } = usePopup();
   return (
     <section className="section-dark py-24 md:py-32">
       <div className="container mx-auto px-6">

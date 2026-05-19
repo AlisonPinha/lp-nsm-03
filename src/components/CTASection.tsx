@@ -1,9 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
-import { useQuizModal } from "@/hooks/useQuizModal";
+import { usePopup } from "@/hooks/usePopup";
 import { useTrackSectionView } from "@/hooks/useTrackSectionView";
 
 const CTASection = () => {
-  const { open } = useQuizModal();
+  const { open } = usePopup();
   const sectionRef = useTrackSectionView<HTMLElement>("lp-03-cta");
   return (
     <section ref={sectionRef} className="section-cream py-24 md:py-32" id="contato">

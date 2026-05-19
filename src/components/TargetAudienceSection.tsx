@@ -1,5 +1,5 @@
 import { ArrowUpRight, Check } from "lucide-react";
-import { useQuizModal } from "@/hooks/useQuizModal";
+import { usePopup } from "@/hooks/usePopup";
 
 const criterios = [
   {
@@ -25,7 +25,7 @@ const criterios = [
 ];
 
 const TargetAudienceSection = () => {
-  const { open } = useQuizModal();
+  const { open } = usePopup();
   return (
     <section className="section-cream py-24 md:py-32 relative">
       {/* Watermark */}

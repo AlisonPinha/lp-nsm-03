@@ -1,5 +1,5 @@
 import { ArrowUpRight, BarChart3, Target, ClipboardList, AlertTriangle, Calculator } from "lucide-react";
-import { useQuizModal } from "@/hooks/useQuizModal";
+import { usePopup } from "@/hooks/usePopup";
 
 const entregaveis = [
   {
@@ -30,7 +30,7 @@ const entregaveis = [
 ];
 
 const DeliverablesSection = () => {
-  const { open } = useQuizModal();
+  const { open } = usePopup();
   return (
     <section className="section-cream py-24 md:py-32" id="entregaveis">
       <div className="container mx-auto px-6">
