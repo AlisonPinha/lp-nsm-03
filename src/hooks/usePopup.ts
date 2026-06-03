@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import React from "react";
-import { trackConversion } from "@/lib/tracking";
 import { trackPixel } from "@/lib/meta-pixel";
 
 interface PopupContextValue {
@@ -15,7 +14,8 @@ export function PopupProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = () => {
-    trackConversion("lead", { action: "popup_opened" });
+    // Abertura do popup é engajamento (ViewContent), não conversão.
+    // Lead só é disparado no submit bem-sucedido (submitPopup).
     trackPixel("ViewContent", {
       content_name: "popup_open",
       content_category: "lead_form",
