@@ -13,7 +13,6 @@ import {
   maskPhoneBR,
   normalizeInstagram,
   validateClinicName,
-  validateEmail,
   validateInstagram,
   validateName,
   validatePhone,
@@ -25,7 +24,6 @@ import {
 
 const EMPTY_FORM: PopupForm = {
   name: "",
-  email: "",
   phone: "",
   instagram: "",
   clinicName: "",
@@ -93,9 +91,6 @@ function PopupContent() {
       case "name":
         err = validateName(value);
         break;
-      case "email":
-        err = validateEmail(value);
-        break;
       case "phone":
         err = validatePhone(value);
         break;
@@ -138,7 +133,6 @@ function PopupContent() {
       /* AM ANTES do Lead pra subir Match Quality */
       const [firstName, ...rest] = finalForm.name.trim().split(/\s+/);
       await setAdvancedMatching({
-        email: finalForm.email,
         phone: finalForm.phone,
         firstName,
         lastName: rest.join(" ") || undefined,
@@ -226,25 +220,6 @@ function PopupContent() {
                     value={form.name}
                     onChange={(e) => setField("name", e.target.value)}
                     onBlur={() => handleBlur("name")}
-                    className="quiz-input text-base md:text-lg"
-                  />
-                </Field>
-
-                {/* E-mail */}
-                <Field
-                  label="Seu melhor e-mail"
-                  error={errors.email}
-                  htmlFor="popup-email"
-                >
-                  <input
-                    id="popup-email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    placeholder="nome@clinica.com.br"
-                    value={form.email}
-                    onChange={(e) => setField("email", e.target.value)}
-                    onBlur={() => handleBlur("email")}
                     className="quiz-input text-base md:text-lg"
                   />
                 </Field>

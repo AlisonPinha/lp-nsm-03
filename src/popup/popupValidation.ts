@@ -8,6 +8,17 @@ export const SEGMENT_OPTIONS = [
   "Médica",
   "Odontológica",
   "Fisioterapia",
+  "Dermatologia",
+  "Harmonização Facial",
+  "Nutrição",
+  "Psicologia",
+  "Veterinária",
+  "Oftalmologia",
+  "Ginecologia",
+  "Pediatria",
+  "Ortopedia",
+  "Fonoaudiologia",
+  "Outra especialidade",
 ] as const;
 
 export const REVENUE_OPTIONS = [
@@ -22,19 +33,10 @@ export const REVENUE_OPTIONS = [
 export type Segment = (typeof SEGMENT_OPTIONS)[number];
 export type Revenue = (typeof REVENUE_OPTIONS)[number];
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
 export function validateName(value: string): string | null {
   const v = value.trim();
   if (v.length < 2) return "Digite seu nome (mínimo 2 letras).";
   if (/\d/.test(v)) return "Nome não pode conter números.";
-  return null;
-}
-
-export function validateEmail(value: string): string | null {
-  const v = value.trim();
-  if (!v) return "Digite seu e-mail.";
-  if (!EMAIL_REGEX.test(v)) return "E-mail inválido.";
   return null;
 }
 
@@ -72,7 +74,6 @@ export function validateRevenue(value: string): string | null {
 
 export interface PopupForm {
   name: string;
-  email: string;
   phone: string;
   instagram: string;
   clinicName: string;
@@ -86,8 +87,6 @@ export function validateAll(form: PopupForm): PopupErrors {
   const errors: PopupErrors = {};
   const name = validateName(form.name);
   if (name) errors.name = name;
-  const email = validateEmail(form.email);
-  if (email) errors.email = email;
   const phone = validatePhone(form.phone);
   if (phone) errors.phone = phone;
   const instagram = validateInstagram(form.instagram);

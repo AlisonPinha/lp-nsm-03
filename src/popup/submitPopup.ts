@@ -2,7 +2,6 @@ import { getVisitorId, getMetaTrackingContext } from "@/lib/tracking";
 
 export interface PopupAnswers {
   name: string;
-  email: string;
   phone: string;
   instagram: string;
   clinicName: string;
@@ -33,7 +32,6 @@ export async function submitPopup(answers: PopupAnswers): Promise<SubmitResult> 
     source: "lp-03",
     answers: {
       name: answers.name,
-      email: answers.email,
       phone: answers.phone,
       instagram: answers.instagram,
       clinicName: answers.clinicName,
