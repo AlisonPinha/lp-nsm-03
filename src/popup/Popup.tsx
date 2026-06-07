@@ -130,22 +130,28 @@ function PopupContent() {
 
       const { leadEventId } = await submitPopup(finalForm);
 
-      /* AM ANTES do Lead pra subir Match Quality */
-      const [firstName, ...rest] = finalForm.name.trim().split(/\s+/);
-      await setAdvancedMatching({
-        phone: finalForm.phone,
-        firstName,
-        lastName: rest.join(" ") || undefined,
-        externalId: getVisitorId() ?? undefined,
-      });
-      trackPixel(
-        "Lead",
-        {
-          content_name: finalForm.segment,
-          content_category: "popup_complete",
-        },
-        leadEventId,
-      );
+      // Tracking é best-effort: o lead JÁ foi salvo. Se o pixel falhar (ad blocker,
+      // fbq indisponível), NÃO pode cair no catch e mostrar erro falso ao usuário.
+      try {
+        /* AM ANTES do Lead pra subir Match Quality */
+        const [firstName, ...rest] = finalForm.name.trim().split(/\s+/);
+        await setAdvancedMatching({
+          phone: finalForm.phone,
+          firstName,
+          lastName: rest.join(" ") || undefined,
+          externalId: getVisitorId() ?? undefined,
+        });
+        trackPixel(
+          "Lead",
+          {
+            content_name: finalForm.segment,
+            content_category: "popup_complete",
+          },
+          leadEventId,
+        );
+      } catch (trackErr) {
+        console.warn("[Popup] tracking falhou (lead já salvo, seguindo):", trackErr);
+      }
 
       setStatus("success");
     } catch (err) {
