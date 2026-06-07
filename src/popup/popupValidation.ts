@@ -42,7 +42,7 @@ export function validateName(value: string): string | null {
 
 export function validatePhone(value: string): string | null {
   const digits = value.replace(/\D/g, "");
-  if (digits.length < 11) return "WhatsApp incompleto (use DDD + 9 dígitos).";
+  if (digits.length < 10) return "WhatsApp incompleto (use DDD + número).";
   if (digits.length > 11) return "WhatsApp inválido.";
   return null;
 }
