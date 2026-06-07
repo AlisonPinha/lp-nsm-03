@@ -30,6 +30,7 @@ export async function submitPopup(answers: PopupAnswers): Promise<SubmitResult> 
 
   const payload = {
     source: "lp-03",
+    hp: (document.getElementById("lp-hp") as HTMLInputElement | null)?.value ?? "",
     answers: {
       name: answers.name,
       phone: answers.phone,

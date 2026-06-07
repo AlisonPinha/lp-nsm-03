@@ -210,6 +210,7 @@ function PopupContent() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                <input type="text" id="lp-hp" name="hp" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
                 {/* Nome */}
                 <Field
                   label="Seu nome"
