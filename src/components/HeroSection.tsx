@@ -24,8 +24,7 @@ const HeroSection = () => {
 
           <p className="text-nlm-secondary text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed font-body">
             Em 47 minutos de conversa estratégica, vamos montar o plano pra lotar sua agenda com pacientes que pagam de{" "}
-            <strong className="text-nlm-title">R$3k a R$15k por procedimento</strong>{" "}
-            — sem pechinchar.
+            <strong className="text-nlm-title">R$3k a R$15k por procedimento</strong>, sem pechinchar.
           </p>
 
           <button type="button" onClick={open} className="btn-primary">

@@ -5,7 +5,7 @@ const faqs = [
   {
     question: "Quanto tempo leva pra ver os primeiros resultados?",
     answer:
-      "Os primeiros agendamentos qualificados aparecem entre 2 e 4 semanas após a implementação. Resultados consistentes se consolidam entre 60 e 90 dias — depende da sua cidade, especialidade e ponto de partida.",
+      "Os primeiros agendamentos qualificados aparecem entre 2 e 4 semanas após a implementação. Resultados consistentes se consolidam entre 60 e 90 dias. Depende da sua cidade, especialidade e ponto de partida.",
   },
   {
     question: "Preciso ter uma equipe de marketing?",
@@ -15,17 +15,17 @@ const faqs = [
   {
     question: "Qual o investimento mínimo em anúncios?",
     answer:
-      "R$2.500/mês em mídia paga. Esse valor varia conforme cidade e especialidade — na sessão estratégica, calculamos juntos o número ideal pro seu caso.",
+      "R$2.500/mês em mídia paga. Esse valor varia conforme cidade e especialidade. Na sessão estratégica, calculamos juntos o número ideal pro seu caso.",
   },
   {
     question: "Vocês são uma agência de marketing?",
     answer:
-      "Não. Agências entregam posts e cliques. A gente entrega pacientes na cadeira. Somos uma aceleradora de vendas — nosso sistema cobre da atração ao agendamento confirmado.",
+      "Não. Agências entregam posts e cliques. A gente entrega pacientes na cadeira. Somos uma aceleradora de vendas: nosso sistema cobre da atração ao agendamento confirmado.",
   },
   {
     question: "E se eu já trabalho com uma agência?",
     answer:
-      "Muitos dos nossos clientes vieram de agências genéricas que não geravam pacientes de alto valor. Na sessão, analisamos o que tá funcionando e o que precisa mudar — sem compromisso.",
+      "Muitos dos nossos clientes vieram de agências genéricas que não geravam pacientes de alto valor. Na sessão, analisamos o que tá funcionando e o que precisa mudar, sem compromisso.",
   },
 ];
 

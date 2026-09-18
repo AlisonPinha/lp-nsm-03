@@ -201,7 +201,7 @@ function PopupContent() {
                   Fale com um <span className="text-nlm-blue">consultor</span>
                 </h2>
                 <p className="text-sm text-nlm-secondary font-body">
-                  Preencha os dados — Pedro te chama em até 10 minutos no
+                  Preencha os dados: Pedro te chama em até 10 minutos no
                   WhatsApp.
                 </p>
               </div>
