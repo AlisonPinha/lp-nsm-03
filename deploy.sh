@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "=== LP NSM 02 - Deploy ==="
+echo "=== LP NSM 03 - Deploy ==="
 echo ""
 
 # 1. Testes
@@ -26,7 +26,7 @@ echo "Deploy OK"
 
 # 5. Health check
 echo "[5/5] Health check..."
-STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://nutraseumarketing.com.br/lp-02)
+STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://nutraseumarketing.com.br/lp-03)
 if [ "$STATUS" = "200" ]; then
   echo "LP respondendo: $STATUS OK"
 else
