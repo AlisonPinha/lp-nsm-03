@@ -126,22 +126,22 @@ const CasesSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="section-dark py-24 md:py-32" id="cases">
+    <section ref={sectionRef} className="section-tint py-24 md:py-32" id="cases">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <p className="section-label">(03) Resultados</p>
-          <h2 className="font-display text-2xl md:text-3xl font-medium">
+          <h2 className="font-display text-2xl md:text-3xl font-normal">
             Clínicas que implementaram{" "}
-            <span className="text-nsm-green">nosso sistema</span>
+            <span className="text-nlm-blue">nosso sistema</span>
           </h2>
         </div>
 
         <div className="max-w-4xl mx-auto space-y-8">
           {featuredCases.map((caseItem, index) => (
-            <div key={index} className="card-dark p-8 md:p-10">
+            <div key={index} className="card-plain p-8 md:p-10">
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="md:w-1/3">
-                  <div className="relative aspect-[9/16] rounded-xl overflow-hidden border border-white/[0.06]">
+                  <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-nlm-page">
                     {activeVideos.has(caseItem.youtubeId) ? (
                       <div
                         ref={setContainerRef(caseItem.youtubeId)}
@@ -159,8 +159,8 @@ const CasesSection = () => {
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-colors">
-                          <div className="w-16 h-16 rounded-full bg-nsm-green/90 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Play className="w-7 h-7 text-nsm-dark-1 ml-1" />
+                          <div className="w-16 h-16 rounded-full bg-black/70 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Play className="w-7 h-7 text-white ml-1" />
                           </div>
                         </div>
                       </button>
@@ -169,24 +169,24 @@ const CasesSection = () => {
                 </div>
 
                 <div className="md:w-2/3 space-y-5">
-                  <Quote className="w-8 h-8 text-nsm-green/20" />
+                  <Quote className="w-8 h-8 text-nlm-blue/25" />
 
                   <div>
-                    <h3 className="font-display text-xl font-semibold text-white">{caseItem.name}</h3>
-                    <p className="text-white/40 text-sm font-body">{caseItem.specialty}</p>
+                    <h3 className="font-display text-xl font-normal">{caseItem.name}</h3>
+                    <p className="text-nlm-secondary text-sm font-body">{caseItem.specialty}</p>
                   </div>
 
-                  <blockquote className="text-lg text-white/70 leading-relaxed font-body">
+                  <blockquote className="text-lg text-nlm-body leading-relaxed font-body">
                     "{caseItem.quote}"
                   </blockquote>
 
-                  <p className="text-white/40 text-sm font-body leading-relaxed">
+                  <p className="text-nlm-secondary text-sm font-body leading-relaxed">
                     Resultado alcançado:{" "}
-                    <strong className="text-nsm-green">{caseItem.result}</strong>
+                    <strong className="text-nlm-blue">{caseItem.result}</strong>
                   </p>
 
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-nsm-green/10 border border-nsm-green/20 rounded-full">
-                    <span className="text-nsm-green text-sm font-semibold">{caseItem.metric}</span>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-nlm-tile-blue rounded-full">
+                    <span className="text-nlm-on-tile-blue text-sm font-medium">{caseItem.metric}</span>
                   </div>
                 </div>
               </div>

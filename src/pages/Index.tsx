@@ -18,7 +18,7 @@ import { Popup } from "@/popup/Popup";
 const Index = () => {
   return (
     <PopupProvider>
-      <main className="min-h-screen bg-nsm-dark-1">
+      <main className="min-h-screen bg-white">
         <Navbar />
         <HeroSection />
         <ClientLogosMarquee />

@@ -22,14 +22,14 @@ const dores = [
 const DoresSection = () => {
   const sectionRef = useTrackSectionView<HTMLElement>("lp-03-dores");
   return (
-    <section ref={sectionRef} className="section-dark py-24 md:py-32" id="dores">
+    <section ref={sectionRef} className="section-plain py-24 md:py-32" id="dores">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <p className="section-label">(02) Identificação</p>
 
-          <h2 className="font-display text-2xl md:text-3xl font-medium mb-16 text-balance max-w-3xl">
+          <h2 className="font-display text-2xl md:text-3xl font-normal mb-16 text-balance max-w-3xl">
             Se você se identifica com alguma dessas situações,{" "}
-            <span className="text-nsm-green">essa conversa é para você.</span>
+            <span className="text-nlm-blue">essa conversa é para você.</span>
           </h2>
 
           <div className="space-y-0">
@@ -38,16 +38,16 @@ const DoresSection = () => {
                 {index > 0 && <div className="divider-line" />}
                 <div className="py-8 md:py-10 flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
                   <div className="flex items-center gap-4 md:w-72 shrink-0">
-                    <span className="text-white/20 font-display text-sm font-medium">
+                    <span className="text-nlm-secondary font-display text-sm font-medium tabular-nums">
                       /{String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="text-nsm-green text-lg">*</span>
+                    <span className="text-nlm-blue text-lg">*</span>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-display text-xl md:text-2xl font-medium mb-3">
+                    <h3 className="font-display text-xl md:text-2xl font-normal mb-3">
                       {dor.title}
                     </h3>
-                    <p className="text-white/50 leading-relaxed font-body">
+                    <p className="text-nlm-secondary leading-relaxed font-body">
                       {dor.description}
                     </p>
                   </div>

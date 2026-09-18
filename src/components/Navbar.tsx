@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { usePopup } from "@/hooks/usePopup";
+import logo from "@/assets/logo-nsm.png";
 
 const navLinks = [
   { label: "Dores", href: "#dores" },
@@ -25,14 +26,14 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-nsm-dark-1/95 backdrop-blur-md border-b border-white/5"
+          ? "bg-white/85 backdrop-blur-md border-b border-nlm-stroke"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <a href="#" className="font-display text-2xl font-bold text-white tracking-tight">
-          nsm
+        <a href="#" className="flex items-center">
+          <img src={logo} alt="Nutra Seu Marketing" width={1109} height={512} className="h-8 w-auto" />
         </a>
 
         {/* Desktop links */}
@@ -41,7 +42,7 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-white/60 hover:text-white transition-colors font-body"
+              className="text-sm text-nlm-secondary hover:text-nlm-title transition-colors font-body"
             >
               {link.label}
             </a>
@@ -52,7 +53,7 @@ const Navbar = () => {
         <button
           type="button"
           onClick={open}
-          className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-nsm-green text-nsm-dark-1 text-sm font-semibold transition-all hover:shadow-neon-glow-sm hover:-translate-y-0.5"
+          className="hidden md:inline-flex items-center gap-2 h-10 px-5 rounded-full bg-black text-white text-sm font-medium transition-colors hover:bg-black/85"
         >
           Agendar sessão
         </button>
@@ -60,7 +61,7 @@ const Navbar = () => {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-white p-2"
+          className="md:hidden text-nlm-title p-2"
           aria-label="Menu"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -69,13 +70,13 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-nsm-dark-1/98 backdrop-blur-md border-t border-white/5 px-6 py-6 space-y-4">
+        <div className="md:hidden bg-white border-t border-b border-nlm-stroke px-6 py-6 space-y-4">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="block text-base text-white/70 hover:text-white transition-colors"
+              className="block text-base text-nlm-body hover:text-nlm-title transition-colors"
             >
               {link.label}
             </a>
@@ -83,7 +84,7 @@ const Navbar = () => {
           <button
             type="button"
             onClick={() => { setMobileOpen(false); open(); }}
-            className="block w-full text-center px-5 py-3 rounded-full bg-nsm-green text-nsm-dark-1 font-semibold text-sm"
+            className="block w-full text-center px-5 py-3 rounded-full bg-black text-white font-medium text-sm"
           >
             Agendar sessão
           </button>

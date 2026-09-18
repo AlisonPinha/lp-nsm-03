@@ -50,13 +50,13 @@ const FAQItem = ({
   return (
     <div className="faq-item">
       <button onClick={onToggle} className="faq-item-trigger">
-        <span className="text-lg font-medium text-nsm-dark-3 pr-4">
+        <span className="text-lg font-normal text-nlm-title pr-4">
           {faq.question}
         </span>
         {isOpen ? (
-          <Minus className="w-5 h-5 text-nsm-green shrink-0" />
+          <Minus className="w-5 h-5 text-nlm-blue shrink-0" />
         ) : (
-          <Plus className="w-5 h-5 text-nsm-dark-3/40 shrink-0" />
+          <Plus className="w-5 h-5 text-nlm-secondary shrink-0" />
         )}
       </button>
       <div
@@ -64,7 +64,7 @@ const FAQItem = ({
         style={{ maxHeight: height }}
       >
         <div ref={contentRef} className="faq-item-content">
-          <p className="text-nsm-dark-3/70 leading-relaxed">{faq.answer}</p>
+          <p className="text-nlm-body leading-relaxed">{faq.answer}</p>
         </div>
       </div>
     </div>
@@ -79,11 +79,11 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="section-cream py-24 md:py-32" id="faq">
+    <section className="section-tint py-24 md:py-32" id="faq">
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto">
-          <p className="section-label-dark">(08) Perguntas frequentes</p>
-          <h2 className="font-display text-3xl md:text-4xl font-medium text-nsm-dark-3 mb-14">
+          <p className="section-label">(08) Perguntas frequentes</p>
+          <h2 className="font-display text-3xl md:text-4xl font-normal mb-14">
             Dúvidas? A gente responde.
           </h2>
 

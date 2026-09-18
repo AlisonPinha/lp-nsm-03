@@ -3,7 +3,7 @@ const GiantMarquee = () => {
   const repeated = text.repeat(6);
 
   return (
-    <section className="section-cream py-12 md:py-16">
+    <section className="section-plain py-12 md:py-16">
       <div className="marquee-container">
         <div className="marquee-track animate-marquee-scroll-fast">
           <span
