@@ -167,7 +167,7 @@ function PopupContent() {
   return createPortal(
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4 md:p-6"
-      style={{ background: "rgba(7, 7, 8, 0.92)", backdropFilter: "blur(6px)" }}
+      style={{ background: "var(--nlm-scrim)", backdropFilter: "blur(6px)" }}
       role="dialog"
       aria-modal="true"
       aria-label="Captação NSM"
@@ -177,16 +177,13 @@ function PopupContent() {
         className="relative w-full max-w-lg quiz-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
-        <div
-          className="rounded-2xl border bg-nsm-dark-2 p-6 md:p-8"
-          style={{ borderColor: "rgba(255,255,255,0.08)" }}
-        >
+        <div className="rounded-2xl bg-white shadow-nlm-float p-6 md:p-8">
           {/* Close */}
           <button
             type="button"
             onClick={close}
             aria-label="Fechar"
-            className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors p-2"
+            className="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center text-nlm-secondary hover:text-nlm-title hover:bg-black/[0.08] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -197,13 +194,13 @@ function PopupContent() {
             <>
               {/* Header */}
               <div className="mb-6 pr-6">
-                <p className="text-xs font-medium tracking-widest uppercase text-nsm-green/80 mb-2 font-body">
+                <p className="text-xs font-medium tracking-widest uppercase text-nlm-blue mb-2 font-body">
                   Sessão estratégica NSM
                 </p>
-                <h2 className="font-display text-2xl md:text-3xl font-medium text-white leading-tight mb-2">
-                  Fale com um <span className="text-nsm-green">consultor</span>
+                <h2 className="font-display text-2xl md:text-3xl font-normal leading-tight mb-2">
+                  Fale com um <span className="text-nlm-blue">consultor</span>
                 </h2>
-                <p className="text-sm text-white/50 font-body">
+                <p className="text-sm text-nlm-secondary font-body">
                   Preencha os dados — Pedro te chama em até 10 minutos no
                   WhatsApp.
                 </p>
@@ -239,11 +236,7 @@ function PopupContent() {
                 >
                   <div className="flex">
                     <span
-                      className="inline-flex items-center gap-2 px-4 rounded-l-xl border border-r-0 text-white/70 text-base font-body"
-                      style={{
-                        background: "#141416",
-                        borderColor: "rgba(255,255,255,0.1)",
-                      }}
+                      className="inline-flex items-center gap-2 px-4 rounded-l-xl border border-r-0 border-nlm-stroke bg-nlm-page text-nlm-secondary text-base font-body"
                       aria-hidden
                     >
                       <span className="text-lg leading-none">🇧🇷</span>
@@ -357,7 +350,7 @@ function PopupContent() {
                   <button
                     type="submit"
                     disabled={!valid || submitting}
-                    className="btn-neon w-full justify-center disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                    className="btn-primary w-full justify-center disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black"
                   >
                     {submitting ? (
                       <>
@@ -372,11 +365,11 @@ function PopupContent() {
                     )}
                   </button>
                   {submitError && (
-                    <p className="mt-3 text-sm text-red-400 text-center font-body">
+                    <p className="mt-3 text-sm text-nlm-negative text-center font-body">
                       {submitError}
                     </p>
                   )}
-                  <p className="mt-3 text-xs text-white/30 text-center font-body">
+                  <p className="mt-3 text-xs text-nlm-secondary text-center font-body">
                     Seus dados ficam só com a NSM. Sem spam.
                   </p>
                 </div>
@@ -402,13 +395,13 @@ function Field({ label, htmlFor, error, children }: FieldProps) {
     <div>
       <label
         htmlFor={htmlFor}
-        className="block text-sm font-medium text-white/80 mb-2 font-body"
+        className="block text-sm font-medium text-nlm-title mb-2 font-body"
       >
         {label}
       </label>
       {children}
       {error && (
-        <p className="mt-1.5 text-xs text-red-400 font-body" role="alert">
+        <p className="mt-1.5 text-xs text-nlm-negative font-body" role="alert">
           {error}
         </p>
       )}
