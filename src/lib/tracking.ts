@@ -1,5 +1,5 @@
 /**
- * NSM Tracking SDK — self-contained module for LP-03.
+ * NSM Tracking SDK: self-contained module for LP-03.
  * Sends page_view, scroll_depth, time_on_page, and conversion events
  * to the tracking-api at tracking-api.nsmvps.com.br.
  */
@@ -310,7 +310,7 @@ async function sendPageViewToCAPI(
     });
     if (DEBUG) console.log('[trk] PageView CAPI sent', { eventId });
   } catch {
-    // fail-silent — Pixel browser já disparou, perda só do espelho server-side
+    // fail-silent: Pixel browser já disparou, perda só do espelho server-side
   }
 }
 

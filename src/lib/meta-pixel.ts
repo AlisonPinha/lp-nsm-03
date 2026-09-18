@@ -1,5 +1,5 @@
 /**
- * Meta Pixel helper — centraliza todas as chamadas fbq().
+ * Meta Pixel helper: centraliza todas as chamadas fbq().
  * Standard events usam 'track', custom events usam 'trackCustom'.
  *
  * Suporta `eventID` opcional para deduplicação Pixel ↔ CAPI server.
