@@ -12,7 +12,7 @@ const HeroSection = () => {
           <div className="inline-flex items-center gap-2.5 px-4 md:px-5 py-2 rounded-full bg-white border border-nlm-stroke mb-8 md:mb-10">
             <span className="w-2 h-2 rounded-full bg-nlm-blue animate-pulse" />
             <span className="text-[13px] md:text-sm text-nlm-secondary font-body">
-              Usado por +32 clínicas premium no Brasil
+              Usado por +100 clínicas premium no Brasil
             </span>
           </div>
 
