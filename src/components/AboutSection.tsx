@@ -1,4 +1,4 @@
-import pedroImage from "@/assets/pedro-actis.jpg";
+import pedroImage from "@/assets/pedro-actis.webp";
 import { Award, TrendingUp, Users, Target, Zap } from "lucide-react";
 
 const authorityPoints = [
@@ -60,6 +60,10 @@ const AboutSection = () => {
               <img
                 src={pedroImage}
                 alt="Pedro Actis - Fundador"
+                width={606}
+                height={752}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto object-cover"
               />
 

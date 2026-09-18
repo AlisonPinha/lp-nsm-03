@@ -4,7 +4,7 @@ import { usePopup } from "@/hooks/usePopup";
 const HeroSection = () => {
   const { open } = usePopup();
   return (
-    <section className="section-plain min-h-screen flex flex-col justify-center pt-20 pb-16 relative">
+    <section className="section-plain min-h-svh flex flex-col justify-center pt-20 pb-16 relative">
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
@@ -44,7 +44,7 @@ const HeroSection = () => {
                   {stat.value}
                 </p>
                 <p className="text-nlm-secondary text-xs mt-1 font-body">{stat.label}</p>
-                <p className="text-nlm-secondary text-[10px] mt-0.5 font-body">{stat.client}</p>
+                <p className="text-nlm-secondary text-xs mt-0.5 font-body">{stat.client}</p>
               </div>
             ))}
           </div>

@@ -103,7 +103,8 @@
 
   .btn-primary {
     @apply inline-flex items-center gap-2 h-12 px-7 rounded-full bg-black text-white
-           text-sm font-medium transition duration-200 hover:bg-black/85 hover:-translate-y-0.5;
+           text-sm font-medium transition duration-200 hover:bg-black/85 hover:-translate-y-0.5
+           active:scale-[0.98];
   }
 
   /* ===================== CARDS ===================== */
@@ -214,3 +215,5 @@
 @media (prefers-reduced-motion: reduce) {
   .text-gradient { animation: none; }
 }
+/* toque: sem espera de duplo toque nos controles (o clique dispara na hora) */
+a, button { touch-action: manipulation; }

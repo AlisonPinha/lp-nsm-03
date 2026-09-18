@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  // hover só onde existe hover de verdade: no toque, o :hover gruda depois do tap (botão ficava erguido)
+  future: { hoverOnlyWhenSupported: true },
   darkMode: ["class"],
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
