@@ -155,10 +155,9 @@ function PopupContent() {
 
       setStatus("success");
     } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Não foi possível enviar agora. Tente de novo.";
+      // O visitante não vê "HTTP 500" nem "Failed to fetch": o erro técnico fica no console.
+      console.error("[popup] envio falhou:", err);
+      const message = "Não foi possível enviar agora. Verifique sua conexão e tente novamente.";
       setSubmitError(message);
       setStatus("error");
     }
