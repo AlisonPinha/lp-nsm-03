@@ -196,9 +196,10 @@
 
   /* destaque de título de marketing: --nlm-gradient-text, que passa AA de ponta a ponta */
   .text-gradient {
-    /* em laço: ida e volta num ladrilho de 200%; deslocar um ladrilho inteiro (-200%) fecha sem salto */
-    background: linear-gradient(90deg, #4259ff, #128937, #4259ff) 0 0 / 200% 100%;
-    animation: grad-loop 6s linear infinite;
+    /* Degradê em laço: azul, roxo dos gráficos e verde, dois ciclos num ladrilho de 200%; deslocar um ladrilho inteiro
+       (-200%) fecha sem salto. Pior ponto 4,03:1: passa AA só em texto grande, então SÓ em título de 24px ou mais. */
+    background: linear-gradient(90deg, #4259ff, #b741ff, #128937, #4259ff, #b741ff, #128937, #4259ff) 0 0 / 200% 100%;
+    animation: grad-loop 3s linear infinite;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
