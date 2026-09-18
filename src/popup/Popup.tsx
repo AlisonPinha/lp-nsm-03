@@ -166,7 +166,7 @@ function PopupContent() {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4 md:p-6"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 md:p-6"
       style={{ background: "rgba(0, 0, 0, 0.32)", backdropFilter: "blur(6px)" }}
       role="dialog"
       aria-modal="true"
@@ -174,7 +174,7 @@ function PopupContent() {
       onClick={close}
     >
       <div
-        className="relative w-full max-w-lg quiz-slide-up"
+        className="relative w-full max-w-lg my-auto quiz-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="rounded-2xl bg-white shadow-nlm-float p-6 md:p-8">
