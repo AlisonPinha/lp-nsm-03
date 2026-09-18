@@ -167,7 +167,7 @@ function PopupContent() {
   return createPortal(
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4 md:p-6"
-      style={{ background: "var(--nlm-scrim)", backdropFilter: "blur(6px)" }}
+      style={{ background: "rgba(0, 0, 0, 0.32)", backdropFilter: "blur(6px)" }}
       role="dialog"
       aria-modal="true"
       aria-label="Captação NSM"

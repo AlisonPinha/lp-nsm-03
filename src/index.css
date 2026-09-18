@@ -66,7 +66,8 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--nlm-focus-ring);
+    /* literal, não var(--nlm-focus-ring): o token é light-dark(), que Safari < 17.5 não entende */
+    outline: 2px solid #4259ff;
     outline-offset: 2px;
   }
 
@@ -184,7 +185,7 @@
 
   .quiz-input:focus {
     @apply outline-none border-nlm-blue;
-    box-shadow: 0 0 0 1px var(--nlm-focus-ring);
+    box-shadow: 0 0 0 1px #4259ff;
   }
 }
 
