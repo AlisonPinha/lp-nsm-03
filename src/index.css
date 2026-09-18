@@ -1,38 +1,43 @@
+@import "./tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 240 6% 3%;
-    --foreground: 0 0% 98%;
+    /* a LP é só tema claro: trava o light-dark() do tokens.css */
+    color-scheme: light;
 
-    --card: 240 5% 6%;
-    --card-foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 240 2% 11%;
 
-    --popover: 240 5% 6%;
-    --popover-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 2% 11%;
 
-    --primary: 90 100% 59%;
-    --primary-foreground: 240 6% 3%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 2% 11%;
 
-    --secondary: 240 4% 8%;
-    --secondary-foreground: 0 0% 98%;
+    --primary: 233 100% 63%;
+    --primary-foreground: 0 0% 100%;
 
-    --muted: 240 4% 12%;
-    --muted-foreground: 0 0% 55%;
+    --secondary: 231 57% 95%;
+    --secondary-foreground: 240 2% 11%;
 
-    --accent: 90 80% 50%;
-    --accent-foreground: 240 6% 3%;
+    --muted: 231 57% 95%;
+    --muted-foreground: 0 0% 37%;
 
-    --destructive: 0 65% 55%;
-    --destructive-foreground: 0 0% 98%;
+    --accent: 233 100% 63%;
+    --accent-foreground: 0 0% 100%;
 
-    --border: 0 0% 14%;
-    --input: 0 0% 14%;
-    --ring: 90 100% 59%;
+    --destructive: 3 71% 52%;
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.75rem;
+    --border: 223 26% 89%;
+    --input: 223 26% 89%;
+    --ring: 233 100% 63%;
+
+    --radius: 1rem;
   }
 }
 
@@ -46,13 +51,23 @@
   }
 
   body {
-    @apply bg-nsm-dark-1 text-foreground antialiased;
-    font-family: "Inter", sans-serif;
+    @apply bg-white text-nlm-body antialiased;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-optical-sizing: auto;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Space Grotesk", sans-serif;
-    @apply tracking-tight;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    @apply font-normal text-nlm-title;
+  }
+
+  strong, b {
+    font-weight: 500;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--nlm-focus-ring);
+    outline-offset: 2px;
   }
 
   p {
@@ -64,78 +79,42 @@
 @layer components {
   /* ===================== SECTIONS ===================== */
 
-  .section-dark {
-    @apply bg-nsm-dark-1 relative overflow-hidden;
-    color: rgba(255, 255, 255, 0.92);
+  .section-plain {
+    @apply bg-white relative overflow-hidden text-nlm-body;
   }
 
-  .section-cream {
-    @apply bg-nsm-cream relative overflow-hidden;
-    color: #1a1a1a;
+  .section-tint {
+    @apply bg-nlm-page relative overflow-hidden text-nlm-body;
   }
 
   /* ===================== LABELS ===================== */
 
   .section-label {
-    @apply inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase mb-6;
-    color: rgba(255, 255, 255, 0.4);
-    font-family: "Inter", sans-serif;
+    @apply inline-flex items-center gap-2 text-xs font-medium tracking-[0.14em] uppercase mb-6 text-nlm-blue;
   }
 
-  .section-label-dark {
-    @apply inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase mb-6;
-    color: rgba(26, 26, 26, 0.4);
-    font-family: "Inter", sans-serif;
+  /* azul da marca dá 4,47:1 no lavanda; o tom 40 da escala passa AA */
+  .section-tint .section-label {
+    @apply text-nlm-blue-strong;
   }
 
   /* ===================== BUTTONS ===================== */
 
-  .btn-neon {
-    @apply inline-flex items-center gap-3 font-semibold
-           px-8 py-4 rounded-full transition-all duration-300;
-    background-color: #8cff2e;
-    color: #070708;
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-  }
-
-  .btn-neon:hover {
-    box-shadow: rgba(132, 255, 31, 0.32) 0px 12px 40px;
-    transform: translateY(-2px);
-  }
-
-  .btn-neon-outline {
-    @apply inline-flex items-center gap-3 font-semibold
-           px-8 py-4 rounded-full transition-all duration-300
-           border-2;
-    border-color: #8cff2e;
-    color: #8cff2e;
-    background: transparent;
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-  }
-
-  .btn-neon-outline:hover {
-    background-color: rgba(140, 255, 46, 0.08);
+  .btn-primary {
+    @apply inline-flex items-center gap-2 h-12 px-7 rounded-full bg-black text-white
+           text-sm font-medium transition-colors duration-200 hover:bg-black/85;
   }
 
   /* ===================== CARDS ===================== */
 
-  .glass-card {
-    @apply rounded-2xl border backdrop-blur-md;
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.08);
+  /* card sobre seção branca: traço de 1px */
+  .card-outline {
+    @apply rounded-2xl bg-white border border-nlm-stroke;
   }
 
-  .card-dark {
-    @apply rounded-2xl border;
-    background: #0e0e10;
-    border-color: rgba(255, 255, 255, 0.06);
-  }
-
-  .card-light {
+  /* card sobre seção lavanda: contraste tonal, sem sombra */
+  .card-plain {
     @apply rounded-2xl bg-white;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
   }
 
   /* ===================== MARQUEE ===================== */
@@ -152,24 +131,20 @@
 
   .faq-item {
     @apply bg-white rounded-2xl overflow-hidden transition-all duration-300;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
   }
 
   .faq-item-trigger {
     @apply w-full flex items-center justify-between p-6 text-left cursor-pointer;
-    font-family: "Space Grotesk", sans-serif;
   }
 
   .faq-item-content {
     @apply px-6 pb-6;
-    font-family: "Inter", sans-serif;
   }
 
   /* ===================== WATERMARK ===================== */
 
   .nsm-watermark {
     @apply absolute font-bold pointer-events-none select-none;
-    font-family: "Space Grotesk", sans-serif;
     font-size: 200px;
     opacity: 0.03;
     line-height: 1;
@@ -178,22 +153,15 @@
   /* ===================== DIVIDERS ===================== */
 
   .divider-line {
-    @apply w-full;
+    @apply w-full bg-nlm-stroke;
     height: 1px;
-    background: rgba(255, 255, 255, 0.08);
   }
 
-  .divider-line-cream {
-    @apply w-full;
-    height: 1px;
-    background: rgba(26, 26, 26, 0.1);
-  }
-
-  /* ===================== QUIZ ===================== */
+  /* ===================== POPUP ===================== */
 
   .quiz-overlay {
     @apply fixed inset-0 z-[100] overflow-y-auto;
-    background: rgba(7, 7, 8, 0.98);
+    background: rgba(0, 0, 0, 0.32);
     backdrop-filter: blur(4px);
   }
 
@@ -205,86 +173,32 @@
     animation: quiz-slide-up 400ms ease-out;
   }
 
-  .quiz-option {
-    @apply w-full glass-card px-6 py-4 flex items-center gap-4
-           cursor-pointer transition-all duration-200;
-  }
-
-  .quiz-option:hover {
-    border-color: rgba(140, 255, 46, 0.4);
-  }
-
-  .quiz-option-selected {
-    border-color: #8cff2e;
-    background: rgba(140, 255, 46, 0.1);
-  }
-
   .quiz-input {
-    @apply w-full rounded-xl px-5 py-4 text-lg font-body transition-colors;
-    background: #1a1a1a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    @apply w-full rounded-xl px-4 py-3 text-base font-body transition-colors
+           bg-white border border-nlm-stroke text-nlm-title;
   }
 
   .quiz-input::placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    @apply text-nlm-placeholder;
   }
 
   .quiz-input:focus {
-    outline: none;
-    border-color: #8cff2e;
-    box-shadow: 0 0 0 3px rgba(140, 255, 46, 0.1);
-  }
-
-  /* Calendar */
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-  }
-
-  .calendar-day {
-    @apply w-10 h-10 rounded-lg flex items-center justify-center text-sm
-           cursor-pointer transition-all duration-150;
-  }
-
-  .calendar-day:hover:not(.calendar-day-disabled) {
-    background: rgba(140, 255, 46, 0.1);
-  }
-
-  .calendar-day-selected {
-    background: #8cff2e !important;
-    color: #070708;
-    font-weight: 600;
-  }
-
-  .calendar-day-today {
-    box-shadow: inset 0 0 0 1px rgba(140, 255, 46, 0.4);
-  }
-
-  .calendar-day-disabled {
-    color: rgba(255, 255, 255, 0.2);
-    cursor: not-allowed;
-  }
-
-  .calendar-time-chip {
-    @apply glass-card px-4 py-2 text-sm cursor-pointer transition-all duration-150;
-  }
-
-  .calendar-time-chip:hover {
-    border-color: rgba(140, 255, 46, 0.4);
-  }
-
-  .calendar-time-selected {
-    background: #8cff2e !important;
-    color: #070708;
-    border-color: #8cff2e !important;
+    @apply outline-none border-nlm-blue;
+    box-shadow: 0 0 0 1px var(--nlm-focus-ring);
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* destaque de título de marketing: --nlm-gradient-text, que passa AA de ponta a ponta */
+  .text-gradient {
+    background: var(--nlm-gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .quiz-slide-up {

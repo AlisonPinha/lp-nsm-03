@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Space Grotesk", "sans-serif"],
-        body: ["Inter", "sans-serif"],
-        sans: ["Inter", "sans-serif"],
+        display: ["Google Sans", "Roboto", "Arial", "sans-serif"],
+        body: ["Google Sans", "Roboto", "Arial", "sans-serif"],
+        sans: ["Google Sans", "Roboto", "Arial", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -52,12 +52,32 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "nsm-green": "#8cff2e",
-        "nsm-dark-1": "#070708",
-        "nsm-dark-2": "#0e0e10",
-        "nsm-dark-3": "#1a1a1a",
-        "nsm-dark-4": "#242424",
-        "nsm-cream": "#f8f5f1",
+        // Identidade NSM = design system NotebookLM (~/Projetos/NSM/nsm-brand/tokens.css)
+        nlm: {
+          blue: "#4259ff",
+          "blue-strong": "#384acf",
+          page: "#edeffa",
+          stroke: "#dde1eb",
+          title: "#1b1b1c",
+          body: "#303030",
+          secondary: "#5e5e5e",
+          // o #777 do DS dá 4,48:1 no branco; #757575 é o cinza mais próximo que passa AA
+          placeholder: "#757575",
+          positive: "#128937",
+          "positive-bg": "#e1f1e5",
+          negative: "#db372d",
+          "negative-bg": "#f7edeb",
+          "tile-blue": "#edeffa",
+          "on-tile-blue": "#224484",
+          "tile-green": "#e1f1e5",
+          "on-tile-green": "#0f5223",
+          "tile-yellow": "#f2f2e8",
+          "on-tile-yellow": "#796731",
+          "tile-pink": "#f0e9ef",
+          "on-tile-pink": "#802272",
+          "tile-cyan": "#def1f7",
+          "on-tile-cyan": "#056a95",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,9 +85,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        "neon-glow": "rgba(132,255,31,0.32) 0px 12px 40px",
-        "neon-glow-sm": "rgba(132,255,31,0.2) 0px 6px 20px",
-        "card-light": "0 2px 16px rgba(0,0,0,0.06)",
+        // plano; sombra só no que flutua (diálogo)
+        "nlm-float": "0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)",
       },
       keyframes: {
         "marquee-scroll": {

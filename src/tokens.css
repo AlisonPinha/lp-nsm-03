@@ -1,0 +1,147 @@
+/*
+ * NotebookLM (hoje "Gemini Notebook"): design tokens extraídos do app em produção
+ * (notebook.google.com) em 18/09/2026. Valores literais das variáveis --nlm-* e --mat-sys-*.
+ * Tema claro/escuro via light-dark(): basta trocar `color-scheme` no :root.
+ *
+ * Fontes (Google Fonts, licença OFL):
+ * <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:opsz,wght@17..18,400..700&family=Material+Symbols+Outlined:opsz,wght,FILL@20..24,400,0..1&display=swap">
+ * Google Sans tem eixo opsz 17..18: com font-optical-sizing:auto, abaixo de 18px vira o
+ * corte "Google Sans Text" que o app usa em corpo e labels, e a partir de 18px o corte display.
+ */
+:root {
+  color-scheme: light dark;
+
+  /* Marca */
+  --nlm-brand-blue: #4259ff;
+  --nlm-brand-green: #45ec6d;
+  --nlm-brand-black: #000;
+  --nlm-gradient-brand: linear-gradient(90deg, #7182ff, #3cff52);   /* só fundo/decoração: a ponta verde tem 1,34:1 sobre branco */
+  --nlm-gradient-text: linear-gradient(90deg, #4259ff, #128937);    /* NSM: gradiente de TEXTO, passa AA de ponta a ponta */
+  --nlm-gradient-callout: linear-gradient(267.52deg, rgba(60, 255, 82, .15) -.57%, rgba(113, 130, 255, .15) 89.06%);
+
+  /* Escala azul (primária) */
+  --nlm-blue-2: #17181c;
+  --nlm-blue-5: #1d1e26;
+  --nlm-blue-10: #232740;
+  --nlm-blue-20: #2a3163;
+  --nlm-blue-30: #2f3a8e;
+  --nlm-blue-40: #384acf;
+  --nlm-blue-50: #4259ff;
+  --nlm-blue-60: #596cf7;
+  --nlm-blue-70: #7c8bf3;
+  --nlm-blue-80: #94a0f4;
+  --nlm-blue-90: #c3cafc;
+  --nlm-blue-95: #dbdfff;
+  --nlm-blue-98: #edeffa;
+
+  /* Escala cinza (neutra) */
+  --nlm-grey-10: #1b1b1c;
+  --nlm-grey-20: #303030;
+  --nlm-grey-30: #474747;
+  --nlm-grey-40: #5e5e5e;
+  --nlm-grey-50: #777;
+  --nlm-grey-60: #919191;
+  --nlm-grey-70: #ababab;
+  --nlm-grey-80: #c7c7c7;
+  --nlm-grey-90: #e3e3e3;
+  --nlm-grey-95: #f2f2f2;
+  --nlm-grey-98: #f9f9f9;
+
+  /* Superfícies */
+  --nlm-surface-page: light-dark(#edeffa, #1a1d22);      /* fundo lavanda atrás dos painéis */
+  --nlm-surface-page-plain: light-dark(#fff, #1a1d22);   /* home e landing */
+  --nlm-surface-panel: light-dark(#fff, #22262b);        /* Fontes / Conversa / Estúdio */
+  --nlm-surface-card: light-dark(#fafafd, #262a30);
+  --nlm-surface-field: light-dark(#f9f9f9, #1a1d22);     /* caixa de busca de fontes */
+  --nlm-surface-blue: light-dark(#edeffa, #22262b);      /* chip selecionado, badge PRO, card de notebook */
+  --nlm-surface-caution: light-dark(#fef7e0, #362e18);
+  --nlm-scrim: light-dark(rgba(0, 0, 0, .32), rgba(0, 0, 0, .6));
+
+  /* Texto */
+  --nlm-text-title: light-dark(#1b1b1c, #f2f2f2);
+  --nlm-text-body: light-dark(#303030, #c7c7c7);
+  --nlm-text-secondary: light-dark(#5e5e5e, #ababab);
+  --nlm-text-ghost: light-dark(#757575, #919191);   /* NSM: #777 do NotebookLM dá 4,48:1 e reprova AA */
+  --nlm-text-link: light-dark(#4259ff, #c3caff);
+  --nlm-text-warning: light-dark(#b06000, #ffba28);
+
+  /* Traço e foco */
+  --nlm-stroke: light-dark(#dde1eb, #37383b);
+  --nlm-stroke-strong: light-dark(#c4c7c5, #444746);    /* toggles e dropdown da home (mat outline-variant) */
+  --nlm-focus-ring: light-dark(#4259ff, #c3cafc);
+
+  /* CTAs */
+  --nlm-cta-primary-bg: light-dark(#000, #fff);          /* pílula preta: "Criar notebook", "Adicionar nota" */
+  --nlm-cta-primary-fg: light-dark(#fff, #22262b);
+  --nlm-cta-brand-bg: #4259ff;
+  --nlm-cta-brand-fg: #fff;
+  --nlm-cta-tonal-bg: light-dark(rgba(0, 0, 0, .08), rgba(255, 255, 255, .08));
+
+  /* Estados (overlay sobre a cor de fundo) */
+  --nlm-state-hover: light-dark(rgba(0, 0, 0, .08), rgba(255, 255, 255, .08));
+  --nlm-state-focus: light-dark(rgba(0, 0, 0, .12), rgba(255, 255, 255, .12));
+
+  /* Tiles do Estúdio: fundo + cor do conteúdo */
+  --nlm-tile-blue: light-dark(#edeffa, #32343e);    --nlm-on-tile-blue: light-dark(#224484, #d4dafa);
+  --nlm-tile-green: light-dark(#e1f1e5, #303632);   --nlm-on-tile-green: light-dark(#0f5223, #cdf1d6);
+  --nlm-tile-yellow: light-dark(#f2f2e8, #3a3a2f);  --nlm-on-tile-yellow: light-dark(#796731, #f2f2ce);
+  --nlm-tile-orange: light-dark(#f7edeb, #3a3230);  --nlm-on-tile-orange: light-dark(#8c2e2a, #f7d8d2);
+  --nlm-tile-pink: light-dark(#f0e9ef, #3a3139);    --nlm-on-tile-pink: light-dark(#802272, #f0cceb);
+  --nlm-tile-cyan: light-dark(#def1f7, #32383e);    --nlm-on-tile-cyan: light-dark(#056a95, #c9eff0);
+
+  /* Pastéis de card de notebook (versão mais escura no dark que os tiles) */
+  --nlm-pastel-purple: light-dark(#edeffa, #20222d);
+  --nlm-pastel-green: light-dark(#e1f1e5, #1e2520);
+  --nlm-pastel-yellow: light-dark(#f2f2e8, #29291d);
+  --nlm-pastel-orange: light-dark(#f7edeb, #29201e);
+  --nlm-pastel-pink: light-dark(#f0e9ef, #291f28);
+  --nlm-pastel-blue: light-dark(#e7f0fa, #20272d);
+
+  /* Ícones coloridos de tipo de fonte */
+  --nlm-icon-blue: #3271ea;
+  --nlm-icon-yellow: #fcbd00;
+  --nlm-icon-red: #db372d;
+  --nlm-icon-pink: #b741ff;
+  --nlm-icon-green: #128937;
+
+  /* Tipografia (escala Material 3 do app, com Google Sans) */
+  --nlm-font: "Google Sans", "Google Sans Text", Roboto, Arial, sans-serif;
+  --nlm-font-icons: "Material Symbols Outlined";
+  --nlm-type-hero: 500 5.5rem/5.625rem var(--nlm-font);          /* landing: 88/90 */
+  --nlm-type-display-large: 400 3.562rem/4rem var(--nlm-font);
+  --nlm-type-headline-large: 400 2rem/2.5rem var(--nlm-font);    /* "Vamos iniciar seu notebook..." */
+  --nlm-type-headline-medium: 400 1.75rem/2.25rem var(--nlm-font);
+  --nlm-type-headline-small: 400 1.5rem/2rem var(--nlm-font);    /* títulos de seção e de card */
+  --nlm-type-title-large: 400 1.375rem/1.75rem var(--nlm-font);  /* nome do notebook no header */
+  --nlm-type-title-medium: 500 1rem/1.5rem var(--nlm-font);
+  --nlm-type-panel-title: 400 1rem/1.5rem var(--nlm-font);       /* "Fontes", "Conversa", "Estúdio" */
+  --nlm-type-body-large: 400 1rem/1.5rem var(--nlm-font);
+  --nlm-type-body-medium: 400 .875rem/1.25rem var(--nlm-font);
+  --nlm-type-body-small: 400 .75rem/1rem var(--nlm-font);
+  --nlm-type-label-large: 500 .875rem/1.25rem var(--nlm-font);   /* botões */
+  --nlm-type-label-medium: 500 .75rem/1rem var(--nlm-font);      /* tiles do Estúdio */
+  --nlm-type-label-small: 500 .688rem/1rem var(--nlm-font);      /* tags "Novidade!" */
+
+  /* Forma */
+  --nlm-radius-xs: 4px;
+  --nlm-radius-sm: 8px;     /* badge PRO, callout */
+  --nlm-radius-md: 12px;    /* tiles do Estúdio, cards de notebook */
+  --nlm-radius-lg: 16px;    /* painéis, campo de chat, caixa de busca */
+  --nlm-radius-xl: 24px;    /* chips e segmented toggle */
+  --nlm-radius-full: 9999px;/* todo botão é pílula */
+
+  /* Espaço e medidas */
+  --nlm-space-1: 4px;
+  --nlm-space-2: 8px;
+  --nlm-space-3: 12px;
+  --nlm-space-4: 16px;      /* margem da página e gap entre painéis */
+  --nlm-space-6: 24px;      /* padding interno de card */
+  --nlm-header-height: 64px;
+  --nlm-panel-header-height: 48px;
+  --nlm-row-height: 48px;   /* item da lista de fontes */
+  --nlm-tile-height: 56px;
+
+  /* Elevação: o app é plano; sombra só no que flutua */
+  --nlm-shadow-float: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+  --nlm-shadow-menu: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12);
+}
