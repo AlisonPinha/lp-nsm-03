@@ -103,7 +103,7 @@
 
   .btn-primary {
     @apply inline-flex items-center gap-2 h-12 px-7 rounded-full bg-black text-white
-           text-sm font-medium transition-colors duration-200 hover:bg-black/85;
+           text-sm font-medium transition duration-200 hover:bg-black/85 hover:-translate-y-0.5;
   }
 
   /* ===================== CARDS ===================== */
@@ -196,7 +196,9 @@
 
   /* destaque de título de marketing: --nlm-gradient-text, que passa AA de ponta a ponta */
   .text-gradient {
-    background: var(--nlm-gradient-text);
+    /* em laço: ida e volta num ladrilho de 200%; deslocar um ladrilho inteiro (-200%) fecha sem salto */
+    background: linear-gradient(90deg, #4259ff, #128937, #4259ff) 0 0 / 200% 100%;
+    animation: grad-loop 6s linear infinite;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -205,4 +207,9 @@
   .quiz-slide-up {
     animation: quiz-slide-up 0.5s ease-out forwards;
   }
+}
+
+@keyframes grad-loop { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient { animation: none; }
 }

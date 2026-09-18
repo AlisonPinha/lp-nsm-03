@@ -53,7 +53,7 @@ const Navbar = () => {
         <button
           type="button"
           onClick={open}
-          className="hidden md:inline-flex items-center gap-2 h-10 px-5 rounded-full bg-black text-white text-sm font-medium transition-colors hover:bg-black/85"
+          className="hidden md:inline-flex items-center gap-2 h-10 px-5 rounded-full bg-black text-white text-sm font-medium transition hover:bg-black/85 hover:-translate-y-0.5"
         >
           Agendar sessão
         </button>

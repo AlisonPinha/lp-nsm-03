@@ -350,7 +350,7 @@ function PopupContent() {
                   <button
                     type="submit"
                     disabled={!valid || submitting}
-                    className="btn-primary w-full justify-center disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black"
+                    className="btn-primary w-full justify-center disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:translate-y-0"
                   >
                     {submitting ? (
                       <>
