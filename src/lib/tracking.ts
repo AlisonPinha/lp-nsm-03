@@ -25,26 +25,10 @@ const CAPI_URL = import.meta.env.PROD
 interface TrackingData {
   vid: string;
   ts: number;
-  fts?: string;
-  ftm?: string;
-  ftc?: string;
-  lts?: string;
-  ltm?: string;
-  ltc?: string;
-  ltt?: string;
-  ltcn?: string;
   gclid?: string;
   fbclid?: string;
   fbc?: string;
   fbp?: string;
-}
-
-interface UTMData {
-  source?: string;
-  medium?: string;
-  campaign?: string;
-  term?: string;
-  content?: string;
 }
 
 interface ClickIDs {
@@ -71,22 +55,8 @@ function writeCookie(data: TrackingData): void {
   document.cookie = `${COOKIE_NAME}=${value}; path=/; max-age=${maxAge}; SameSite=Lax`;
 }
 
-// ── UTM & Click IDs ─────────────────────────────────────────────
-
-function extractUTMs(): UTMData {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    source: params.get('utm_source') ?? undefined,
-    medium: params.get('utm_medium') ?? undefined,
-    campaign: params.get('utm_campaign') ?? undefined,
-    term: params.get('utm_term') ?? undefined,
-    content: params.get('utm_content') ?? undefined,
-  };
-}
-
-function hasUTMs(utm: UTMData): boolean {
-  return !!(utm.source || utm.medium || utm.campaign);
-}
+// ── Click IDs ───────────────────────────────────────────────────
+// A UTM (primeiro e último toque) é capturada só pelo /nsm-origem.js do domínio.
 
 function extractClickIDs(): ClickIDs {
   const params = new URLSearchParams(window.location.search);
@@ -118,6 +88,7 @@ function generateEventId(): string {
 // ── Event Sending ───────────────────────────────────────────────
 
 function buildPayload(event: string, data: TrackingData, properties?: Record<string, unknown>) {
+  const u = window.nsmOrigem?.get().ultimo;
   return {
     event_id: generateEventId(),
     event,
@@ -125,12 +96,13 @@ function buildPayload(event: string, data: TrackingData, properties?: Record<str
     url: window.location.href,
     referrer: document.referrer || undefined,
     page_title: document.title || undefined,
-    utm: data.lts ? {
-      source: data.lts,
-      medium: data.ltm,
-      campaign: data.ltc,
-      term: data.ltt,
-      content: data.ltcn,
+    utm: u ? {
+      source: u.source,
+      medium: u.medium,
+      campaign: u.campaign,
+      term: u.term,
+      content: u.content,
+      utm_id: u.id,
     } : undefined,
     click_ids: {
       gclid: data.gclid,
@@ -233,21 +205,12 @@ export function initTracking(): void {
   _data = readCookie();
 
   if (!_data) {
-    const utms = extractUTMs();
     const clickIds = extractClickIDs();
 
     _data = {
       vid: generateUUID(),
       ts: Date.now(),
       fbp: generateFbp(),
-      fts: utms.source,
-      ftm: utms.medium,
-      ftc: utms.campaign,
-      lts: utms.source,
-      ltm: utms.medium,
-      ltc: utms.campaign,
-      ltt: utms.term,
-      ltcn: utms.content,
       gclid: clickIds.gclid,
       fbclid: clickIds.fbclid,
       fbc: clickIds.fbc,
@@ -260,20 +223,10 @@ export function initTracking(): void {
     if (clickIds.fbclid) { _data.fbclid = clickIds.fbclid; _data.fbc = clickIds.fbc; updated = true; }
     if (!_data.fbp) { _data.fbp = generateFbp(); updated = true; }
 
-    const utms = extractUTMs();
-    if (hasUTMs(utms)) {
-      _data.lts = utms.source;
-      _data.ltm = utms.medium;
-      _data.ltc = utms.campaign;
-      _data.ltt = utms.term;
-      _data.ltcn = utms.content;
-      updated = true;
-    }
-
     if (updated) writeCookie(_data);
   }
 
-  sendEvent('page_view', _data);
+  // A visita (page_view) na tracking-api sai do /nsm-origem.js, igual em todas as páginas.
 
   // Meta Pixel PageView (browser) + espelha no CAPI server-side com mesmo event_id.
   // Dedup automático no Events Manager.

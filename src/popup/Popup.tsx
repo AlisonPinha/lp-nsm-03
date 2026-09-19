@@ -149,6 +149,7 @@ function PopupContent() {
           },
           leadEventId,
         );
+        window.gtag?.("event", "generate_lead", { source: "lp-03" });
       } catch (trackErr) {
         console.warn("[Popup] tracking falhou (lead já salvo, seguindo):", trackErr);
       }

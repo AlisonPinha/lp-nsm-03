@@ -39,7 +39,8 @@ export async function submitPopup(answers: PopupAnswers): Promise<SubmitResult> 
       segment: answers.segment,
       revenue: answers.revenue,
     },
-    utm: getStoredUTMs(),
+    // Primeiro e último toque do /nsm-origem.js; sem ele o lead segue sem origem.
+    origem: window.nsmOrigem?.get(),
     sessionId: crypto.randomUUID?.() ?? fallbackUUID(),
     visitor_id: getVisitorId() ?? undefined,
     metaContext: getMetaTrackingContext(),
@@ -81,30 +82,6 @@ export async function submitPopup(answers: PopupAnswers): Promise<SubmitResult> 
   }
 
   throw lastError ?? new Error("Falha ao enviar dados");
-}
-
-function getStoredUTMs(): Record<string, string> {
-  try {
-    const stored = sessionStorage.getItem("popup-utm-lp-03");
-    if (stored) return JSON.parse(stored);
-  } catch {
-    /* ignore */
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  const utm: Record<string, string> = {};
-  for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
-    const val = params.get(key);
-    if (val) utm[key] = val;
-  }
-  if (Object.keys(utm).length > 0) {
-    try {
-      sessionStorage.setItem("popup-utm-lp-03", JSON.stringify(utm));
-    } catch {
-      /* ignore */
-    }
-  }
-  return utm;
 }
 
 function fallbackUUID(): string {

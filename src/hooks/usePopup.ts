@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import React from "react";
-import { trackPixel } from "@/lib/meta-pixel";
 
 interface PopupContextValue {
   isOpen: boolean;
@@ -14,13 +13,10 @@ export function PopupProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = () => {
-    // Abertura do popup é engajamento (ViewContent), não conversão.
-    // Lead só é disparado no submit bem-sucedido (submitPopup).
-    trackPixel("ViewContent", {
-      content_name: "popup_open",
-      content_category: "lead_form",
-      source: "lp-03",
-    });
+    // Todo CTA da LP abre o popup: clique e abertura com os nomes padronizados
+    // (GA4, Pixel e tracking-api pelo /nsm-origem.js). Lead só no envio (Popup.tsx).
+    window.nsmOrigem?.evento("cta_click", { source: "lp-03" });
+    window.nsmOrigem?.evento("open_lead_modal", { source: "lp-03" });
     setIsOpen(true);
   };
   const close = () => setIsOpen(false);
