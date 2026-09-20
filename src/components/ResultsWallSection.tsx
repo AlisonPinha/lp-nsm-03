@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 // Em public/ e não em src/assets: abaixo de 4 KB o Vite embute a imagem em base64 no JS inicial e o lazy loading deixa de valer
 const avatar = (slug: string) => `${import.meta.env.BASE_URL}clientes/${slug}.webp`;
@@ -33,15 +33,15 @@ const prints = [
 // Faixa que corre de lado: reaproveita o animate-marquee-scroll do tailwind.config (0 a -50%), por isso o conteúdo entra duas vezes
 // e o respiro entre itens é padding do item, não gap (com gap o laço dá um salto de meio espaço).
 // Pausa no hover e no toque; com prefers-reduced-motion vira trilho parado de deslizar.
-const Marquee = ({ seconds, reverse, children }: { seconds: number; reverse?: boolean; children: (clone: boolean) => ReactNode }) => (
+// copies: o laço anda metade da faixa, então metade das cópias tem de cobrir a tela; 2 bastam se o conteúdo for largo.
+const Marquee = ({ seconds, reverse, copies = 2, children }: { seconds: number; reverse?: boolean; copies?: number; children: (clone: boolean) => ReactNode }) => (
   // onTouchStart vazio: no Safari do iPhone o :active (pausa por toque) só dispara se existir um listener de touchstart
   <div onTouchStart={() => {}} className="group overflow-hidden motion-reduce:overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
     <ul
       className={`flex w-max ${reverse ? "animate-marquee-scroll-reverse" : "animate-marquee-scroll"} group-hover:[animation-play-state:paused] group-active:[animation-play-state:paused] motion-reduce:animate-none`}
       style={{ animationDuration: `${seconds}s` }}
     >
-      {children(false)}
-      {children(true)}
+      {Array.from({ length: copies }, (_, i) => <Fragment key={i}>{children(i > 0)}</Fragment>)}
     </ul>
   </div>
 );
@@ -86,8 +86,8 @@ const ResultsWallSection = () => {
       </div>
 
       <div className="space-y-4 md:space-y-6">
-        <Marquee seconds={60}>{(clone) => <ResultCards items={results.slice(0, 6)} clone={clone} />}</Marquee>
-        <Marquee seconds={60} reverse>{(clone) => <ResultCards items={results.slice(6)} clone={clone} />}</Marquee>
+        <Marquee seconds={120} copies={4}>{(clone) => <ResultCards items={results.slice(0, 6)} clone={clone} />}</Marquee>
+        <Marquee seconds={120} copies={4} reverse>{(clone) => <ResultCards items={results.slice(6)} clone={clone} />}</Marquee>
       </div>
 
       <div className="container mx-auto px-6 text-center mt-16 md:mt-24 mb-10 md:mb-14">
