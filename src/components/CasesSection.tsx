@@ -1,8 +1,8 @@
 import { Quote, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import draKellyImg from "@/assets/dra-kelly.png";
-import drHumbertoImg from "@/assets/dr-humberto.png";
-import drRaiImg from "@/assets/dr-rai.png";
+import draKellyImg from "@/assets/dra-kelly.webp";
+import drHumbertoImg from "@/assets/dr-humberto.webp";
+import drRaiImg from "@/assets/dr-rai.webp";
 import { useTrackSectionView } from "@/hooks/useTrackSectionView";
 
 declare global {
@@ -156,6 +156,8 @@ const CasesSection = () => {
                         <img
                           src={caseItem.thumbnail}
                           alt={caseItem.name}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-colors">
