@@ -46,18 +46,37 @@
     @apply border-border;
   }
 
+  /* Reserva calibrada para a largura da Google Sans, a mesma da LP-02 (lá o H1 do hero ganhava uma linha quando a
+     Google Sans chegava e o hero saltava 31px, CLS 0,11, medido em 19/09/2026). A diferença é por peso: no 400 a
+     Google Sans tem a largura de Arial e Roboto; no 500 é 2,7% mais larga.
+     Valores escolhidos em banco de prova (12 larguras de 320 a 430px, LP-02 e LP-03): sem reserva, 7 casos em que
+     algum bloco do hero muda de número de linhas quando a fonte chega; com 101% e 102,7%, 1 caso (LP-02 em 320px).
+     A janela é estreita: 100,8% e 101,2% no peso 400 já divergem em outra largura. Medido contra Arial. */
+  @font-face {
+    font-family: "Google Sans Fallback";
+    src: local("Arial"), local("Roboto");
+    font-weight: 400;
+    size-adjust: 101%;
+  }
+  @font-face {
+    font-family: "Google Sans Fallback";
+    src: local("Arial"), local("Roboto");
+    font-weight: 500 700;
+    size-adjust: 102.7%;
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
     @apply bg-white text-nlm-body antialiased;
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-family: "Google Sans", "Google Sans Fallback", Roboto, Arial, sans-serif;
     font-optical-sizing: auto;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-family: "Google Sans", "Google Sans Fallback", Roboto, Arial, sans-serif;
     @apply font-normal text-nlm-title;
   }
 

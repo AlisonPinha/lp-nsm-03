@@ -16,9 +16,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Google Sans", "Roboto", "Arial", "sans-serif"],
-        body: ["Google Sans", "Roboto", "Arial", "sans-serif"],
-        sans: ["Google Sans", "Roboto", "Arial", "sans-serif"],
+        display: ["Google Sans", "Google Sans Fallback", "Roboto", "Arial", "sans-serif"],
+        body: ["Google Sans", "Google Sans Fallback", "Roboto", "Arial", "sans-serif"],
+        sans: ["Google Sans", "Google Sans Fallback", "Roboto", "Arial", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
