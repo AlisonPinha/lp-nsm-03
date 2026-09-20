@@ -37,7 +37,7 @@ const HeroSection = () => {
             {[
               { value: "+200%", label: "Agendamentos", client: "Dra. Kelly" },
               { value: "126", label: "Consultas/ano", client: "Dr. Humberto" },
-              { value: "6.5x", label: "Faturamento", client: "Dr. Raí" },
+              { value: "6,5x", label: "Faturamento", client: "Dr. Raí" },
             ].map((stat, i) => (
               <div key={i} className="card-outline px-4 py-5 text-center">
                 <p className="text-nlm-blue font-display text-xl md:text-2xl font-medium tabular-nums">
