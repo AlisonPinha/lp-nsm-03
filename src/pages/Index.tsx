@@ -4,6 +4,7 @@ import ClientLogosMarquee from "@/components/ClientLogosMarquee";
 import MarqueeBanner from "@/components/MarqueeBanner";
 import DoresSection from "@/components/DoresSection";
 import CasesSection from "@/components/CasesSection";
+import ResultsWallSection from "@/components/ResultsWallSection";
 import GiantMarquee from "@/components/GiantMarquee";
 import DeliverablesSection from "@/components/DeliverablesSection";
 import TargetAudienceSection from "@/components/TargetAudienceSection";
@@ -25,6 +26,7 @@ const Index = () => {
         <MarqueeBanner />
         <DoresSection />
         <CasesSection />
+        <ResultsWallSection />
         <GiantMarquee />
         <DeliverablesSection />
         <TargetAudienceSection />

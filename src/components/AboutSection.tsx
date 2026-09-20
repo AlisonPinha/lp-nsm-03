@@ -1,4 +1,5 @@
 import pedroImage from "@/assets/pedro-actis.webp";
+import timeImage from "@/assets/time-nsm.webp";
 import { Award, TrendingUp, Users, Target, Zap } from "lucide-react";
 
 const authorityPoints = [
@@ -91,6 +92,24 @@ const AboutSection = () => {
             </div>
           </div>
         </div>
+
+        <figure className="mt-16 md:mt-20 max-w-3xl mx-auto text-center">
+          <img
+            src={timeImage}
+            alt="Time da NSM reunido em estúdio"
+            width={1200}
+            height={1320}
+            loading="lazy"
+            decoding="async"
+            className="w-full max-h-[640px] object-cover object-top rounded-2xl"
+          />
+          <figcaption className="mt-6">
+            <p className="font-display text-2xl md:text-3xl font-normal text-nlm-title">E este é o time que roda o sistema com você</p>
+            <p className="text-nlm-secondary font-body mt-2">
+              Por trás de cada resultado desta página tem gente acompanhando a conta de perto.
+            </p>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
