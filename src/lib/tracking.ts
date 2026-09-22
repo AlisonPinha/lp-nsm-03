@@ -66,9 +66,17 @@ function extractClickIDs(): ClickIDs {
   return { gclid, fbclid, fbc };
 }
 
-function generateFbp(): string {
-  const random = Math.floor(Math.random() * 10_000_000_000).toString().padStart(10, '0');
-  return `fb.1.${Date.now()}.${random}`;
+// fbp e fbc de verdade são os cookies do Pixel (_fbp, _fbc), lidos na hora do
+// envio. O SDK fabricava um fbp próprio, que não casava com nada na Meta. Sem o
+// cookie (Pixel bloqueado ou ainda carregando), fbp não vai; fbc cai no montado
+// a partir do fbclid, formato aceito pela Meta.
+function pixelCookie(name: '_fbp' | '_fbc'): string | undefined {
+  const m = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return m ? decodeURIComponent(m[1]) : undefined;
+}
+
+function metaIds(data: TrackingData): { fbp?: string; fbc?: string } {
+  return { fbp: pixelCookie('_fbp'), fbc: pixelCookie('_fbc') ?? data.fbc };
 }
 
 // ── Helpers ─────────────────────────────────────────────────────
@@ -107,8 +115,7 @@ function buildPayload(event: string, data: TrackingData, properties?: Record<str
     click_ids: {
       gclid: data.gclid,
       fbclid: data.fbclid,
-      fbc: data.fbc,
-      fbp: data.fbp,
+      ...metaIds(data),
     },
     properties: { ...properties, lp_name: LP_NAME },
     timestamp: Date.now(),
@@ -210,7 +217,6 @@ export function initTracking(): void {
     _data = {
       vid: generateUUID(),
       ts: Date.now(),
-      fbp: generateFbp(),
       gclid: clickIds.gclid,
       fbclid: clickIds.fbclid,
       fbc: clickIds.fbc,
@@ -221,7 +227,6 @@ export function initTracking(): void {
     const clickIds = extractClickIDs();
     if (clickIds.gclid) { _data.gclid = clickIds.gclid; updated = true; }
     if (clickIds.fbclid) { _data.fbclid = clickIds.fbclid; _data.fbc = clickIds.fbc; updated = true; }
-    if (!_data.fbp) { _data.fbp = generateFbp(); updated = true; }
 
     if (updated) writeCookie(_data);
   }
@@ -248,8 +253,7 @@ async function sendPageViewToCAPI(
     source: LP_NAME,
     url: window.location.href,
     user_agent: navigator.userAgent,
-    fbp: data.fbp,
-    fbc: data.fbc,
+    ...metaIds(data),
     external_id: data.vid,
     am,
   });
@@ -282,7 +286,7 @@ export function getMetaTrackingContext(): {
   fbc?: string;
 } {
   if (!_data) return {};
-  return { visitor_id: _data.vid, fbp: _data.fbp, fbc: _data.fbc };
+  return { visitor_id: _data.vid, ...metaIds(_data) };
 }
 
 export function destroyTracking(): void {
