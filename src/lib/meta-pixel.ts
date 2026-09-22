@@ -142,7 +142,10 @@ export async function setAdvancedMatching(user: AdvancedMatchingUser): Promise<A
 
   if (Object.keys(hashes).length === 0 && !user.externalId) return {};
 
-  // Re-init injeta user_data nos próximos eventos (não dispara PageView novo)
+  // ATENÇÃO (medido em 22/09/2026): com o Pixel já carregado, o fbq("init") repetido
+  // é IGNORADO e nada daqui chega ao hit do Lead (lá só vai o AM automático, udff).
+  // Vale para quem volta: os hashes ficam no localStorage e entram no init da página,
+  // que roda antes de o Pixel carregar. O Lead leva ph/fn/ln certos pela CAPI.
   const initParams: Record<string, string> = { ...hashes };
   if (user.externalId) initParams.external_id = user.externalId;
   window.fbq("init", PIXEL_ID, initParams);
