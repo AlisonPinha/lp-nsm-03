@@ -76,7 +76,12 @@ function pixelCookie(name: '_fbp' | '_fbc'): string | undefined {
 }
 
 function metaIds(data: TrackingData): { fbp?: string; fbc?: string } {
-  return { fbp: pixelCookie('_fbp'), fbc: pixelCookie('_fbc') ?? data.fbc };
+  const cookieFbc = pixelCookie('_fbc');
+  // Clique novo na URL ganha do _fbc de uma visita anterior: o Pixel pode ainda
+  // não ter reescrito o cookie (ou estar bloqueado).
+  const fbclid = new URLSearchParams(window.location.search).get('fbclid');
+  const fbc = fbclid && !cookieFbc?.endsWith(`.${fbclid}`) ? data.fbc : cookieFbc ?? data.fbc;
+  return { fbp: pixelCookie('_fbp'), fbc };
 }
 
 // ── Helpers ─────────────────────────────────────────────────────
