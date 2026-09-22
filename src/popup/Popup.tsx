@@ -138,7 +138,7 @@ function PopupContent() {
         await setAdvancedMatching({
           phone: finalForm.phone,
           firstName,
-          lastName: rest.join(" ") || undefined,
+          lastName: rest[rest.length - 1], // último token, igual ao servidor
           externalId: getVisitorId() ?? undefined,
         });
         trackPixel(

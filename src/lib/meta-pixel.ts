@@ -54,10 +54,16 @@ function normEmail(v: string): string {
 }
 
 function normPhone(v: string): string {
-  // Meta espera só dígitos com código de país. BR: garantir prefixo 55.
-  const digits = v.replace(/\D/g, "");
-  if (!digits) return "";
-  return digits.startsWith("55") ? digits : `55${digits}`;
+  // Mesma regra do servidor (noah-agent utils/normalize-phone.js): celular BR em
+  // 13 dígitos, 55 + DDD + 9 + 8. Antes, DDD 55 (RS) virava DDI e o 9 faltante
+  // não era inserido: o hash do Pixel e o da CAPI divergiam para a mesma pessoa.
+  let d = v.replace(/\D/g, "");
+  if (d.startsWith("00")) d = d.slice(2);
+  if (d.startsWith("55") && d.length === 13) return d;
+  if (d.startsWith("55") && d.length === 12) return `${d.slice(0, 4)}9${d.slice(4)}`;
+  if (d.length === 11) return `55${d}`;
+  if (d.length === 10) return `55${d.slice(0, 2)}9${d.slice(2)}`;
+  return d;
 }
 
 function normName(v: string): string {
