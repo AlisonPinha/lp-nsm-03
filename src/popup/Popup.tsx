@@ -134,7 +134,7 @@ function PopupContent() {
       // fbq indisponível), NÃO pode cair no catch e mostrar erro falso ao usuário.
       try {
         /* AM ANTES do Lead pra subir Match Quality */
-        const [firstName, ...rest] = finalForm.name.trim().split(/\s+/);
+        const [firstName, ...rest] = finalForm.name.trim().split(/\s+/).filter((t) => /[a-zà-ÿ]/i.test(t)); // mesmos tokens do servidor (sem emoji ou símbolo solto)
         await setAdvancedMatching({
           phone: finalForm.phone,
           firstName,
